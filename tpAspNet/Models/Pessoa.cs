@@ -8,6 +8,7 @@ namespace tpAspNet.Models
 {
     public class Pessoa
     {
+        public int PessoaId { get; set; }
         public string Nome { get; set; }
         [Display(Name = "Sobrenome")]
         public string SobreNome { get; set; }

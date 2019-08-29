@@ -11,6 +11,29 @@ namespace tpAspNet.Models
 
         public static List<Pessoa> listarPessoas()
         {
+            if(listaPessoa.Count() == 0)
+            {
+                Pessoa p1 = new Pessoa();
+                p1.PessoaId = 1;
+                p1.Nome = "Marcio";
+                p1.SobreNome = "Souza";
+                p1.DataAniversario = new DateTime(19/02/1984);
+
+                Pessoa p2 = new Pessoa();
+                p2.Nome = "Marcio";
+                p2.SobreNome = "Souza";
+                p2.DataAniversario = new DateTime(19 / 02 / 1984);
+
+                Pessoa p3 = new Pessoa();
+                p3.Nome = "Marcio";
+                p3.SobreNome = "Souza";
+                p3.DataAniversario = new DateTime(19 / 02 / 1984);
+
+                listaPessoa.Add(p1);
+                listaPessoa.Add(p2);
+                listaPessoa.Add(p3);
+            }
+
             return listaPessoa;
         }
 
