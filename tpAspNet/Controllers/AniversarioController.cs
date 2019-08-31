@@ -9,79 +9,52 @@ namespace tpAspNet.Controllers
 {
     public class AniversarioController : Controller
     {
-        // GET: Aniversario
+        int countId = 3;
+
+        //LISTA
         public ActionResult Index()
         {
             List<Pessoa> pessoaList = PessoaDal.listarPessoas();
             return View(pessoaList);
         }
 
-        // GET: Aniversario/Details/5
+        //DETALHES
         public ActionResult Details(int id)
         {
-            return View();
+            return View(buscarPorId(id));
         }
 
-        // GET: Aniversario/Create
+        //CRIAÇÃO
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Aniversario/Create
         [HttpPost]
         public ActionResult Create(Pessoa pessoa)
         {
-            pessoa.PessoaId = this.createId();
+            pessoa.Id = this.createId();
             PessoaDal.addPessoa(pessoa);
             return RedirectToAction("Index");
         }
 
-        // GET: Aniversario/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View(buscarId(id));
-        }
-
-        // POST: Aniversario/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, Pessoa person)
-        {
-            foreach (Pessoa pessoa in PessoaDal.listarPessoas())
-            {
-                if(pessoa.PessoaId == id)
-                {
-                    //person.Nome = 
-                }
-
-            }
-
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Aniversario/Delete/5
+        //DELEÇÃO
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(buscarPorId(id));
         }
-
-        // POST: Aniversario/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Pessoa pessoa)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                foreach (Pessoa pesquisa in PessoaDal.listarPessoas())
+                {
+                    if (pesquisa.Id == id)
+                    {
+                        PessoaDal.removePessoa(pesquisa);
+                        break;
+                    }
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -90,15 +63,65 @@ namespace tpAspNet.Controllers
             }
         }
 
-        public Pessoa buscarId(int id)
+        //EDIÇÃO
+        public ActionResult Edit(int id)
+        {
+            return View(buscarPorId(id));
+        }
+        [HttpPost]
+        public ActionResult Edit(int id, Pessoa pessoa)
+        {
+            try
+            {
+                Pessoa p = pessoa;
+                foreach (Pessoa pesquisa in PessoaDal.listarPessoas())
+                {
+                    if (pesquisa.Id == id)
+                    {
+                        pesquisa.Nome = p.Nome;
+                        pesquisa.SobreNome = p.SobreNome;
+                        pesquisa.DataAniversario = p.DataAniversario;
+                        break;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //BUSCA
+        public ActionResult Search()
+        {
+            string pesquisa = "";
+            return View(buscarPorNome(pesquisa));
+        }
+        [HttpPost]
+        public ActionResult Search(string nome)
+        {
+            try
+            {
+                return View(buscarPorNome(nome));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //GENERICS
+        public Pessoa buscarPorId(int id)
         {
             Pessoa resultado = new Pessoa();
-            foreach(Pessoa p in PessoaDal.listarPessoas())
+            foreach (Pessoa p in PessoaDal.listarPessoas())
             {
-                if(p.PessoaId == id)
+                if (p.Id == id)
                 {
-                    resultado.PessoaId = id;
+                    resultado.Id = id;
                     resultado.Nome = p.Nome;
+                    resultado.SobreNome = p.SobreNome;
                     resultado.DataAniversario = p.DataAniversario;
                     break;
                 }
@@ -106,24 +129,23 @@ namespace tpAspNet.Controllers
             return resultado;
         }
 
-        public void EditPessoa(int id, Pessoa p)
+        public List<Pessoa> buscarPorNome(string nome)
         {
-            foreach(Pessoa pessoa in PessoaDal.listarPessoas())
+            List<Pessoa> resultadosList = new List<Pessoa>();
+            foreach(Pessoa p in PessoaDal.listarPessoas())
             {
-                if(pessoa.PessoaId == id)
+                if(p.Nome.Contains(nome))
                 {
-                    pessoa.Nome = p.Nome;
-                    pessoa.SobreNome = p.SobreNome;
-                    pessoa.DataAniversario = p.DataAniversario;
-                    break;
+                    resultadosList.Add(p);
                 }
             }
+            return resultadosList;
         }
 
         public int createId()
         {
-            int count = 0;
-            return count +=1;
+            this.countId += 1;
+            return this.countId;
         }
     }
 }

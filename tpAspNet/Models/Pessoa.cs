@@ -8,11 +8,11 @@ namespace tpAspNet.Models
 {
     public class Pessoa
     {
-        public int PessoaId { get; set; }
+        public int Id { get; set; }
         public string Nome { get; set; }
         [Display(Name = "Sobrenome")]
         public string SobreNome { get; set; }
         [Display(Name = "Data de aniversário")]
-        public DateTime DataAniversario { get; set; }
+        public string DataAniversario { get; set; }
     }
 }

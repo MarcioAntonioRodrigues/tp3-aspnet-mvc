@@ -199,6 +199,9 @@
     <Content Include="Views\Aniversario\Details.cshtml" />
     <Content Include="Views\Aniversario\Index.cshtml" />
     <Content Include="Views\Aniversario\Create.cshtml" />
+    <Content Include="Views\Aniversario\Edit.cshtml" />
+    <Content Include="Views\Aniversario\Delete.cshtml" />
+    <Content Include="Views\Aniversario\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
