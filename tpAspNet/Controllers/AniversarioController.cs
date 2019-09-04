@@ -99,11 +99,13 @@ namespace tpAspNet.Controllers
             return View(buscarPorNome(pesquisa));
         }
         [HttpPost]
-        public ActionResult Search(string nome)
+        public ActionResult Search(string pesquisa)
         {
-            try
+			List<Pessoa> listaDeBusca = buscarPorNome(pesquisa);
+
+			try
             {
-                return View(buscarPorNome(nome));
+                return View(listaDeBusca);
             }
             catch
             {
@@ -129,12 +131,12 @@ namespace tpAspNet.Controllers
             return resultado;
         }
 
-        public List<Pessoa> buscarPorNome(string nome)
+        public List<Pessoa> buscarPorNome(string pesquisa)
         {
             List<Pessoa> resultadosList = new List<Pessoa>();
             foreach(Pessoa p in PessoaDal.listarPessoas())
             {
-                if(p.Nome.Contains(nome))
+                if(p.Nome.Contains(pesquisa))
                 {
                     resultadosList.Add(p);
                 }
