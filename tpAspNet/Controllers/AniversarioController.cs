@@ -136,7 +136,7 @@ namespace tpAspNet.Controllers
             List<Pessoa> resultadosList = new List<Pessoa>();
             foreach(Pessoa p in PessoaDal.listarPessoas())
             {
-                if(p.Nome.Contains(pesquisa))
+                if(p.Nome.ToLower().Contains(pesquisa.ToLower()))
                 {
                     resultadosList.Add(p);
                 }
